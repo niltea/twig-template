@@ -1,0 +1,17 @@
+/*clearfix*/
+@mixin clearfix {
+	zoom: 1;
+	&:after {
+		content: "";
+		clear: both;
+		display: block;
+	}
+}
+
+/*hiding text*/
+@mixin txtHide{
+	text-indent: -9999px;
+	white-space: nowrap;
+	overflow: hidden;
+	vertical-align: bottom;
+}

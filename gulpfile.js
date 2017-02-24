@@ -10,6 +10,14 @@ const $twig_output_data = {};
 // プレビュー表示用HTMLの生成先
 const $htmlRoot = '__html/';
 
+// for optional task
+// SASS source file
+const $cssSrc = ['./src/sass/**/*.scss'];
+const $cssDist = $dist + 'css/';
+// JS source file
+const $jsSrc = ['./src/js/**/*.js'];
+const $jsDist = $dist + 'js/';
+
 // tasks
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
@@ -52,7 +60,43 @@ gulp.task('server', () => {
 });
 
 gulp.task('watch', () => {
+	gulp.watch($jsSrc, ['js']);
+	gulp.watch($cssSrc, ['sass']);
 	gulp.watch($twigSrc, ['twig']);
 });
 
 gulp.task('default', ['server', 'watch']);
+
+// optional tasks
+// sass
+gulp.task('sass', () => {
+	const sass = require('gulp-sass');
+	const postcss = require('gulp-postcss');
+	const autoprefixer = require('autoprefixer')
+
+	gulp.src($cssSrc)
+	.pipe(plumber())
+	// .pipe(sass({outputStyle: 'compressed'}))
+	.pipe(sass({outputStyle: 'expanded'}))
+	.pipe(postcss([
+		autoprefixer({
+			browsers: ['last 2 versions', 'ie >= 9', 'Android >= 4','ios_saf >= 8'],
+			cascade: false
+		})
+	]))
+	.pipe(gulp.dest($cssDist));
+});
+
+// js
+gulp.task('js', function() {
+	const babel = require('gulp-babel');
+	const uglify = require("gulp-uglify");
+	gulp.src($jsSrc)
+	.pipe(plumber())
+	.pipe(babel({
+		presets: ['es2015'],
+		comments: false
+	}))
+	.pipe(uglify())
+	.pipe(gulp.dest($jsDist));
+});

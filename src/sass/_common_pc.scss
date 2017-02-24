@@ -1,0 +1,16 @@
+$minw: 980px;
+/* =======================================================================
+base settings
+========================================================================== */
+body {
+	min-width: $minw;
+}
+
+#wrapper {
+	min-width: $minw;
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	background-color: #000;
+	font-family: 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', 'Osaka', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}

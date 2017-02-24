@@ -1,0 +1,9 @@
+@charset "UTF-8";
+@import "node_modules/sanitize.scss/sanitize.scss";
+@import "includes/mixin.scss";
+.clearfix {
+	@include clearfix;
+}
+
+@import "common_pc.scss";
+// @import "includes/sp.scss";
