@@ -12,7 +12,7 @@ const $htmlRoot = '__html/';
 
 // for optional task
 // SASS source file
-const $cssSrc = ['./src/sass/**/*.scss'];
+const $cssSrc = ['./src/sass/**/*.scss', './src/sass/**/*.sass'];
 const $cssDist = $dist + 'css/';
 // JS source file
 const $jsSrc = ['./src/js/**/*.js'];
