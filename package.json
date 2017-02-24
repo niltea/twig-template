@@ -2,6 +2,7 @@
   "dependencies": {
     "browser-sync": "^2.18.8",
     "gulp": "^3.9.1",
-    "gulp-twig": "^0.7.0"
+    "gulp-twig": "^0.7.0",
+    "gulp-uglify": "^2.0.1"
   }
 }
