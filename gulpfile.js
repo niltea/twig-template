@@ -1,8 +1,11 @@
 'use strict';
 // settings
 const $dist = './dist/';
+
+// twigテンプレートのベースディレクトリ
+const $twigBase = './src/twig/';
 const $twigSrc = ['./src/twig/**/*.twig', './src/twig/**/*.html'];
-const $twigSrc_exclude = ['!./src/twig/**/_*.twig', '!./src/twig/**/_*.html'];
+const $twigSrc_exclude = ['!**/_*.twig', '!**/_*.html'];
 
 // twigコンパイル時に持たせておくデーター
 const $twig_output_data = {};
@@ -21,16 +24,19 @@ const $jsDist = $dist + 'js/';
 // tasks
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
+
 gulp.task('twig', () => {
 	const twig = require('gulp-twig');
 	const _twigSrc = $twigSrc.concat($twigSrc_exclude);
-	const _twigDist = $dist + $htmlRoot;
-	gulp.src( _twigSrc )
+	const _htmlRoot = $htmlRoot.replace(/\/$/, '');
+	const _htmlDist = $dist + _htmlRoot;
+	gulp.src(_twigSrc)
 	.pipe(plumber())
 	.pipe(twig({
-		data: $twig_output_data
+		data: $twig_output_data,
+		base: $twigBase
 	}))
-	.pipe(gulp.dest(_twigDist));
+	.pipe(gulp.dest(_htmlDist));
 
 	// twigテンプレートをdistへコピー
 	gulp.src($twigSrc).pipe(gulp.dest($dist));
@@ -45,11 +51,10 @@ gulp.task('server', () => {
 			directory: false
 		},
 		middleware: (req, res, next) => {
-			if (req.url === '/') {
-				req.url = _htmlRoot;
-			}
-			if (req.url === '/hoge') {
-				req.url = _htmlRoot + 'hoge.html';
+			if (req.url.match(/\/$/)) {
+				req.url = _htmlRoot + req.url.match(/(.*)\/$/)[1] + '/';
+			} else if (req.url.match(/html?$/)) {
+				req.url = _htmlRoot + req.url;
 			}
 			return next();
 		}
@@ -88,7 +93,7 @@ gulp.task('sass', () => {
 });
 
 // js
-gulp.task('js', function() {
+gulp.task('js', () => {
 	const babel = require('gulp-babel');
 	const uglify = require("gulp-uglify");
 	gulp.src($jsSrc)

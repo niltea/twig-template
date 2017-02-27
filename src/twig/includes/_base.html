@@ -15,13 +15,12 @@
 </head>
 <body>
 	<div id="wrapper">
-		{% include "./_header.html" %}
-
+		{% include "/includes/_header.html" %}
 		<main>
 			{% block page %}{% endblock %}
 		</main>
 
-		{% include "./_footer.html" %}
+		{% include "/includes/_footer.html" %}
 	</div>
 	<script async src="/js/common.js"></script>
 </body>
