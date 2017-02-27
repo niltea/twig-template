@@ -1,1 +1,0 @@
-"use strict";!function(){console.log("this is empty script.")}();
